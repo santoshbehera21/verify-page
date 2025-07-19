@@ -1,43 +1,390 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VerifyEmail - Email Checker</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f9fc;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: #333;
-    }
-    .container {
-      text-align: center;
-      background: #fff;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      font-size: 2.5em;
-      color: #2d8cf0;
-    }
-    p {
-      font-size: 1.1em;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Investment Calculator</title>
+    <style>
+        :root {
+            --primary-color: #2962ff;
+            --secondary-color: #0d47a1;
+            --accent-color: #82b1ff;
+            --light-color: #e3f2fd;
+            --dark-color: #1a237e;
+            --text-color: #333;
+            --light-text: #f5f5f5;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .calculator-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .calculator-header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .calculator-header p {
+            opacity: 0.9;
+        }
+
+        .calculator-body {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 25px;
+        }
+
+        .input-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px;
+        }
+
+        .result-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        input[type="number"], input[type="range"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input[type="number"]:focus, input[type="range"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .range-container input[type="range"] {
+            flex: 1;
+        }
+
+        .range-value {
+            min-width: 60px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(41, 98, 255, 0.2);
+        }
+
+        .result-box {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .result-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .result-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .result-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .result-detail-label {
+            color: #666;
+        }
+
+        .result-detail-value {
+            font-weight: 600;
+        }
+
+        .instructions {
+            background-color: var(--light-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-top: 30px;
+        }
+
+        .instructions h2 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-body {
+                flex-direction: column;
+            }
+            
+            .input-section, .result-section {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Welcome to VerifyEmail</h1>
-    <p>Your email verification tool is live.</p>
-    <p>Website deployed successfully on <strong>verify.gmia.xyz</strong>.</p>
-  </div>
+    <div class="container">
+        <div class="calculator-card">
+            <div class="calculator-header">
+                <h1>SIP Investment Calculator</h1>
+                <p>Plan your financial future with systematic investments</p>
+            </div>
+            
+            <div class="calculator-body">
+                <div class="input-section">
+                    <div class="form-group">
+                        <label for="monthly-investment">Monthly Investment (₹)</label>
+                        <input type="number" id="monthly-investment" min="500" step="500" value="5000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="investment-period">Investment Period (Years)</label>
+                        <div class="range-container">
+                            <input type="range" id="investment-period" min="1" max="30" value="10">
+                            <span class="range-value" id="period-value">10</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expected-return">Expected Return Rate (% p.a.)</label>
+                        <div class="range-container">
+                            <input type="range" id="expected-return" min="1" max="30" value="12">
+                            <span class="range-value" id="return-value">12</span>
+                        </div>
+                    </div>
+                    
+                    <button id="calculate-btn">Calculate SIP Returns</button>
+                </div>
+                
+                <div class="result-section">
+                    <h2 class="result-title">Your SIP Results</h2>
+                    
+                    <div class="result-box">
+                        <div class="result-value" id="maturity-amount">₹0</div>
+                        <div>Estimated Maturity Value</div>
+                    </div>
+                    
+                    <div class="result-box">
+                        <div class="result-detail">
+                            <span class="result-detail-label">Total Investment</span>
+                            <span class="result-detail-value" id="total-investment">₹0</span>
+                        </div>
+                        <div class="result-detail">
+                            <span class="result-detail-label">Wealth Gained</span>
+                            <span class="result-detail-value" id="wealth-gained">₹0</span>
+                        </div>
+                        <div class="result-detail">
+                            <span class="result-detail-label">Return Rate</span>
+                            <span class="result-detail-value" id="return-rate">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div id="chart-container" style="height: 200px; margin-top: 20px;">
+                        <!-- Chart will be inserted here -->
+                        <canvas id="sip-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h2>How to Use This SIP Calculator</h2>
+            <ol>
+                <li><strong>Enter Monthly Investment:</strong> Input the amount you plan to invest every month (minimum ₹500).</li>
+                <li><strong>Set Investment Period:</strong> Adjust the slider to select how many years you want to continue the SIP.</li>
+                <li><strong>Expected Return Rate:</strong> Set the annual return rate you expect from your investment (typically 12% for equity funds).</li>
+                <li><strong>Calculate:</strong> Click the calculate button to see your projected returns.</li>
+                <li><strong>Analyze Results:</strong> View your estimated maturity amount, total investment, and wealth gained.</li>
+            </ol>
+            <p style="margin-top: 15px; font-style: italic;">Note: This calculator provides estimates based on compound interest formula. Actual returns may vary based on market conditions.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get DOM elements
+            const monthlyInvestmentInput = document.getElementById('monthly-investment');
+            const investmentPeriodInput = document.getElementById('investment-period');
+            const expectedReturnInput = document.getElementById('expected-return');
+            const periodValue = document.getElementById('period-value');
+            const returnValue = document.getElementById('return-value');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const maturityAmount = document.getElementById('maturity-amount');
+            const totalInvestment = document.getElementById('total-investment');
+            const wealthGained = document.getElementById('wealth-gained');
+            const returnRate = document.getElementById('return-rate');
+            
+            // Initialize chart
+            const ctx = document.getElementById('sip-chart').getContext('2d');
+            let sipChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Total Investment', 'Wealth Gained'],
+                    datasets: [{
+                        data: [0, 0],
+                        backgroundColor: ['#2962ff', '#0d47a1'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+            
+            // Update range value displays
+            investmentPeriodInput.addEventListener('input', function() {
+                periodValue.textContent = this.value;
+            });
+            
+            expectedReturnInput.addEventListener('input', function() {
+                returnValue.textContent = this.value;
+            });
+            
+            // Calculate SIP returns
+            calculateBtn.addEventListener('click', calculateSIP);
+            
+            // Also calculate when any input changes
+            monthlyInvestmentInput.addEventListener('change', calculateSIP);
+            investmentPeriodInput.addEventListener('change', calculateSIP);
+            expectedReturnInput.addEventListener('change', calculateSIP);
+            
+            // Initial calculation
+            calculateSIP();
+            
+            function calculateSIP() {
+                // Get input values
+                const P = parseFloat(monthlyInvestmentInput.value) || 0;
+                const n = parseFloat(investmentPeriodInput.value) || 0;
+                const r = parseFloat(expectedReturnInput.value) / 100 / 12 || 0; // Monthly rate
+                
+                // Calculate total months
+                const months = n * 12;
+                
+                // SIP calculation formula: FV = P * [(1 + r)^n - 1] / r * (1 + r)
+                let FV;
+                if (r === 0) {
+                    FV = P * months;
+                } else {
+                    FV = P * ((Math.pow(1 + r, months) - 1) / r * (1 + r);
+                }
+                
+                // Calculate total investment
+                const totalInv = P * months;
+                
+                // Calculate wealth gained
+                const gain = FV - totalInv;
+                
+                // Calculate return rate (CAGR)
+                const cagr = (Math.pow(FV / totalInv, 1/n) - 1) * 100;
+                
+                // Update UI
+                maturityAmount.textContent = '₹' + formatNumber(FV.toFixed(0));
+                totalInvestment.textContent = '₹' + formatNumber(totalInv.toFixed(0));
+                wealthGained.textContent = '₹' + formatNumber(gain.toFixed(0));
+                returnRate.textContent = cagr.toFixed(2) + '%';
+                
+                // Update chart
+                sipChart.data.datasets[0].data = [totalInv, gain];
+                sipChart.update();
+            }
+            
+            // Format number with commas
+            function formatNumber(num) {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        });
+    </script>
 </body>
 </html>
